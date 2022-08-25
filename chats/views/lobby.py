@@ -1,8 +1,10 @@
 from django.shortcuts import render, reverse, redirect
+from django.contrib.auth.decorators import login_required
 
 from ..models import Thread
 
 
+@login_required()
 def lobby(request):
     logged_user = request.user
     latest_thread = Thread.objects.by_user(user=logged_user.id).order_by('-updated_at').first()

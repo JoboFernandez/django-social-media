@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 from ..models import Message, Thread
 
 
+@login_required()
 def personal(request, username):
     logged_user = request.user
     other_user = User.objects.get(username=username)

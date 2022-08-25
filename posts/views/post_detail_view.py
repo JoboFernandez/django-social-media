@@ -5,7 +5,7 @@ from ..models import Post
 from ..forms import CommentForm
 
 
-class PostDetailView(LoginRequiredMixin, DetailView):
+class PostDetailView(DetailView):
     model = Post
 
     def get_context_data(self, **kwargs):

@@ -1,9 +1,11 @@
-from django.shortcuts import redirect, reverse
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 
 from ..models import Follow, Post
 
 
+@login_required()
 def follow(request, post_pk):
     user = request.user
     post = Post.objects.get(id=post_pk)
@@ -14,6 +16,7 @@ def follow(request, post_pk):
     return redirect(request.META.get("HTTP_REFERER"))
 
 
+@login_required()
 def unfollow(request, post_pk):
     user = request.user
     post = Post.objects.get(id=post_pk)

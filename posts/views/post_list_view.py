@@ -5,7 +5,7 @@ from django.db.models import Q
 from ..models import Post, Follow, Comment
 
 
-class PostListView(LoginRequiredMixin, ListView):
+class PostListView(ListView):
     template_name = 'posts/global_post_list.html'
     model = Post
     ordering = ['-date_posted']

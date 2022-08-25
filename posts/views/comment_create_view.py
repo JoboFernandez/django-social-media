@@ -1,9 +1,11 @@
 from django.shortcuts import reverse, redirect
+from django.contrib.auth.decorators import login_required
 
-from ..models import Post, Comment
+from ..models import Post
 from ..forms import CommentForm
 
 
+@login_required()
 def comment_create(request, post_pk):
     if request.method == "POST":
         comment_form = CommentForm(request.POST or None)
