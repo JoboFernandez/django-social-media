@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'chats/chat_interface.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+    let url = 'ws://localhost:8000/ws' + window.location.pathname
+    const chatSocket = new WebSocket(url)
+
+    chatSocket.onmessage = function(event) {
+        let data = JSON.parse(event.data)
+
+        if (data.type === 'chat'){
+            let messages = document.getElementById('messages')
+
+            messages.insertAdjacentHTML('afterbegin', `<p><span class="fw-bold">[${data.sender}]</span>: ${data.message}</p>`)
+        }
+    }
+
+    let form = document.getElementById('form')
+    form.addEventListener('submit', (event)=> {
+        event.preventDefault()
+        let message = event.target.message.value
+        chatSocket.send(JSON.stringify({
+            'message': message
+        }))
+        form.reset()
+    })
+
+</script>
+{% endblock scripts %}

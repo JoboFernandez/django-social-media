@@ -1,0 +1,29 @@
+<div class="row">
+
+    <div class="col-3 my-2">
+        <div class="overflow-auto bg-light px-2 rounded-2" style="height: 490px;">
+            {% for thread, user in chat_threads %}
+            <a href="{% url 'chats:personal' user.username %}" class="text-dark text-decoration-none fw-bold">
+                <div class="border-bottom p-2">
+                    <img src="{{ user.profile.image.url }}" class="rounded-circle float-left" style="height: 36px;" />
+                    {{ user.username }}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="col-9 my-2">
+        <h2>Chat with {{ other_user }}</h2>
+        <form id="form">
+            <input name="message" placeholder="Enter message here." class="form-control my-2" />
+<!--            <button class="btn btn-primary">Send-->
+        </form>
+        <div id="messages" class="overflow-auto bg-light rounded-2 mt-2" style="height: 400px;">
+            {% for message in messages %}
+            <p><span class="fw-bold">[{{ message.sender }}]</span>: {{ message.text }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>

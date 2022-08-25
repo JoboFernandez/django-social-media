@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+
+    <div class="col">
+    </div>
+
+    <div class="col-8">
+
+        <h1 class="text-center mt-5 mb-3">Subscribed Posts</h1>
+        <hr>
+
+        <div>
+            {% for post in object_list %}
+            {% include 'posts/post.html' %}
+            {% endfor %}
+        </div>
+
+        {% include 'paginator.html' %}
+
+    </div>
+
+    <div class="col">
+    </div>
+
+</div>
+
+{% endblock content %}

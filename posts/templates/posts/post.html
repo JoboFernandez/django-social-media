@@ -1,0 +1,40 @@
+{% load humanize %}
+
+<div class="card m-2">
+
+  <div class="card-header text-light bg-secondary">
+      <a href="{% url 'users:profile' post.author.id %}" class="text-light text-decoration-none fw-bold">
+          <img src="{{ post.author.profile.image.url }}" width="24" class="rounded-circle">
+          {{ post.author.username }}
+      </a>
+      <small class="fw-italic">
+      {{ post.date_posted|timesince }} ago
+      </small>
+  </div>
+
+  <div class="card-body">
+    <p class="card-text">{{ post.content|linebreaksbr }}</p>
+  </div>
+
+
+  <div class="card-footer text-muted">
+      {{ post.comment_count|intcomma }} Comments | {{ post.follow_count|intcomma }} Follows
+      <a href="{{ post.get_absolute_url }}" class="btn btn-outline-primary btn-sm">Comment</a>
+
+      {% if post.author != user %}
+
+      {% if user.id in post.followers %}
+      <a href="{% url 'posts:unfollow' post.id %}" class="btn btn-outline-primary btn-sm">Unfollow</a>
+      {% else %}
+      <a href="{% url 'posts:follow' post.id %}" class="btn btn-outline-primary btn-sm">Follow</a>
+      {% endif %}
+
+      {% else %}
+
+      <a href="{% url 'posts:update' post.id %}" class="btn btn-outline-primary btn-sm">Edit</a>
+      <a href="{{ delete_redirect }}/{{ post.id }}/delete" class="btn btn-outline-danger btn-sm">Delete</a>
+
+      {% endif %}
+  </div>
+
+</div>

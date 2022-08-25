@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+
+    <div class="col">
+    </div>
+
+    <div class="col-6 mt-3 mb-3">
+        <h2 class="text-center">Profiles</h2>
+        {% for profile in profiles %}
+        {% include 'users/profile.html' %}
+        {% endfor %}
+        <a href="{% url 'users:queried-list' %}{% if query %}?query={{ query }}{% endif %}" class="btn btn-primary form-control">See More</a>
+
+        <hr>
+
+        <h2 class="text-center">Posts</h2>
+        {% for post in posts %}
+        {% include 'posts/post.html' %}
+        {% endfor %}
+        <a href="{% url 'posts:queried-list' %}{% if query %}?query={{ query }}{% endif %}" class="btn btn-primary form-control">See More</a>
+
+    </div>
+
+    <div class="col">
+    </div>
+
+</div>
+{% endblock content %}

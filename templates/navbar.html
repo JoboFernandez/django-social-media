@@ -1,0 +1,79 @@
+{% url 'posts:global-list' as global_list %}
+{% url 'posts:subscribed-list' as subscribed_list %}
+{% url 'users:profile' user.id as profile %}
+{% url 'posts:create' as post_create %}
+{% url 'accounts:register' as register %}
+{% url 'accounts:login' as login %}
+{% url 'chats:lobby' as lobby %}
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container container-fluid">
+
+    <span class="navbar-brand mb-0 h1">Social Media</span>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        {% if user.is_authenticated %}
+        <form class="d-flex" role="search" action="/search/">
+          <div class="input-group">
+            <input type="text" name="query" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn btn-outline-light" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </div>
+        </form>
+        {% endif %}
+
+      </ul>
+
+      <ul class="navbar-nav">
+
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a href="{{ global_list }}" class="nav-link {% if request.path == global_list %}active{% endif %}"><i class="fa-solid fa-globe"></i></a>
+        </li>
+        <li>
+          <a href="{{ subscribed_list }}" class="nav-link {% if request.path == subscribed_list %}active{% endif %}"><i class="fa-solid fa-newspaper"></i></a>
+        </li>
+        <li>
+          <a href="{{ profile }}" class="nav-link {% if request.path == profile %}active{% endif %}"><i class="fa-solid fa-user"></i></a>
+        </li>
+        <li>
+          <a href="{{ post_create }}" class="nav-link {% if request.path == post_create %}active{% endif %}"><i class="fa-solid fa-feather"></i></a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ lobby }}" class="nav-link {% if lobby in request.path %}active{% endif %}"><i class="fa-solid fa-envelope"></i></a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{{ user.profile.image.url }}" class="rounded-circle" style="height: 24px;" />
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+<!--            <li><a class="dropdown-item" href="#">Action</a></li>-->
+<!--            <li><a class="dropdown-item" href="#">Another action</a></li>-->
+<!--            <li><hr class="dropdown-divider"></li>-->
+            <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Log Out</a></li>
+          </ul>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a href="{{ register }}" class="nav-link {% if request.path == register %}active{% endif %}">Register</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ login }}" class="nav-link {% if request.path == login %}active{% endif %}">Log In</a>
+        </li>
+        {% endif %}
+
+      </ul>
+
+
+
+    </div>
+
+  </div>
+</nav>
